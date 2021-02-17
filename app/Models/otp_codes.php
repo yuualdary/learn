@@ -9,24 +9,12 @@ class otp_codes extends Model
 {
     use HasFactory;
     
-    protected static function boot(){
-        static::creating(function ($model){
-            if (! $model->getKey()){
-                $model->{$model->getKeyName()}=(string) Str::uuid();//str adalah helper uuid
-            }
-        });
-
-     }
-
+   
     protected $fillable = [
         'key',
     ];
 
-    public function getIncrementing()
-    {
-        return false;
-    }
-    
+ 
 
     public function getKeyType()
     {

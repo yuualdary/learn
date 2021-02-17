@@ -14,12 +14,12 @@ class CreateRoleusersTable extends Migration
     public function up()
     {
         Schema::create('roleusers', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->enum('rolename',['SUPERADMIN','ADMIN','REGISUSER']);
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

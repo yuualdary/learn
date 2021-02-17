@@ -115,7 +115,7 @@
                                 <x-jet-dropdown-link href="{{ route('logout') }}"
                                          onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Logout') }}<!--kalau logout bug install livewire -->
                                 </x-jet-dropdown-link>
                             </form>
                         </x-slot>
