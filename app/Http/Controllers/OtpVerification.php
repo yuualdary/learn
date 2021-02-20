@@ -22,6 +22,8 @@ class OtpVerification extends Controller
             $GetUserAndCode = otp_codes::where([
                 ['user_id','=',Auth::user()->id],
                 ['valid_until','>=',$CurrTime] ,
+                ['otp','=',$OtpCodes],
+
                                                
                 ])->get();
 
@@ -48,10 +50,13 @@ class OtpVerification extends Controller
 
           return response('Success Validation Your Email');
 
-        }elseif($GetCodeId == 0){
+        
+        }elseif(Auth::user()->mailsend == false && $GetCodeId == 0){
             
             return 'Oops Its look like your OTP Code Was Expired, Request OTP Code Again';
 
+        
+        
         }else{
             
             return 'Your Mail Already Verified';
@@ -61,22 +66,31 @@ class OtpVerification extends Controller
     }
 
     public function ResendOtp(request $request){
-
+       
         $CurrTime = Carbon::now();
-        // dd($CurrTime);
         $Otps= otp_codes::all();
-        $OtpCodes = $request->otp;
         foreach($Otps as $Otp){
             $GetUserAndCode = otp_codes::where([
                 ['user_id','=',Auth::user()->id],
-                ['valid_until','=<',$CurrTime] ,
+                ['valid_until','>=',$CurrTime] ,
                                                
                 ])->get();
 
             }
+    
             // dd($GetUserAndCode);
             //get current code from list
-        if(count($GetUserAndCode) != NULL && Auth::user()->mailsend == false){
+        // if(count($GetUserAndCode) != NULL){
+        // foreach($GetUserAndCode as $GetCode){
+           
+        //         $GetCodeId = $GetCode->otp;
+        //     }
+        // }else{
+        //         $GetCodeId = 0;
+        //         // dd('im here');
+        // }
+         
+        if(Auth::user()->id != NULL && Auth::user()->mailsend == false && count($GetUserAndCode) == NULL){
 
             $GetSixRandomNumber = mt_rand(100000,999999);
             // name + 6 rand number
@@ -87,11 +101,10 @@ class OtpVerification extends Controller
              //
              $NewOtp = new otp_codes();
              $NewOtp->otp = $GetOtpCode;
-             $NewOtp->user_id = Auth::user()->id();
+             $NewOtp->user_id = Auth::user()->id;
              $NewOtp->valid_until=$Valid_time;
              $NewOtp->save();            
             return response('Success Generate New OTP, Check Your Mail');
-
         }else{
 
             return response('Otp Already Send, Check Your Mail');
