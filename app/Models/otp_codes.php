@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Models;
-
+use App\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class otp_codes extends Model
 {
-    use HasFactory;
+    use HasFactory, UsesUuid;
     
    
     protected $fillable = [
-        'key',
+        'otp','valid_until','user_id'
     ];
 
  
