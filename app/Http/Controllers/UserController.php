@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        return 'Your Mail is verified';
+        return $request->user()->name;
     }
 
     /**

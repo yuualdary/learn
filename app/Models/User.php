@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,15 +10,18 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\roleuser;
+use Illuminate\Database\Eloquent\Model;
 use Auth;
+use App\Traits\UsesUuid;
 use DB;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
+    use UsesUuid;
     use TwoFactorAuthenticatable;
 
     /**
@@ -93,5 +96,18 @@ class User extends Authenticatable
         }
         return false;
 
+    }
+
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims(){
+        return [];
     }
 }
