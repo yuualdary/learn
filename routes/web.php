@@ -31,3 +31,9 @@ Route::middleware(['auth','admin'])->group(function(){
 Route::middleware(['auth','MailVerif'])->group(function(){
     Route::get('/isverif', [UserController::class,'index']);
 });
+Route::get('/', function(){
+    return view('app');
+});
+ 
+
+Route::view('/{any}','app')->where('any','-*');

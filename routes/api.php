@@ -7,6 +7,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\OtpVerification;
+use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\BlogController;
+
+
 
 
 /*
@@ -43,5 +47,24 @@ use App\Http\Controllers\OtpVerification;
         
         Route::post('validatemail',[OtpVerification::class,'MailVerification']);
         Route::post('resendotp',[OtpVerification::class,'ResendOtp']);
+
+    });
+
+    Route::group([
+        'prefix'=>'campaign',
+    ],function(){
+        Route::get('random/{count}',[CampaignController::class,'Random']);
+        Route::post('store',[CampaignController::class,'store']);
+        Route::get('all',[CampaignController::class,'index']);
+        Route::get('detail/{id}',[CampaignController::class,'detail']);
+
+    });
+
+    
+    Route::group([
+        'prefix'=>'blog',
+    ],function(){
+        Route::get('random/{count}',[BlogController::class,'Random']);
+        Route::post('store',[BlogController::class,'store']);
 
     });

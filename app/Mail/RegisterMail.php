@@ -35,7 +35,7 @@ class RegisterMail extends Mailable
      * @return $this
      */
     public function build(){
-        return $this->from('example@example.com')
+        return $this->from('sponsve20@gmail.com')
                     ->view('Mail.RegisterMail')
                     ->with([
                         'Name'=>$this->Name,
